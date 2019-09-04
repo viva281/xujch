@@ -1,4 +1,11 @@
 
+select * from v$flash_recovery_area_usage; --查看空间占用率
+
+select * from v$recovery_file_dest;  --查看归档日志的存放地址;
+
+select * from v$archived_log where archived='YES' and deleted='NO'; --查看所有归档，未删除的归档日志  
+
+select * from v$recovery_file_dest; ------注意这一步才是真正查看归档空间的实际使用情况： 
 
 1.用RMAN连接目标DB：
 
