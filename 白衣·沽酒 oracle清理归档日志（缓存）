@@ -1,0 +1,49 @@
+
+
+1.用RMAN连接目标DB：
+
+　　rman target /
+
+　　RMAN target sys/*****@orcl
+
+2.在RMAN命令窗口中，输入如下命令（清理所有的归档日志）：
+
+　　crosscheck archivelog all；
+
+　　delete expired archivelog all；
+
+　　或者清理指定时间之前的日志（archivelog）：
+
+　　DELETE ARCHIVELOG ALL COMPLETED BEFORE 'SYSDATE-7'；(指定删除7天前的归档日志)；
+
+　　或者直接如下：
+
+　　RMAN target sys/*****@orcl;
+
+　　DELETE NOPROMPT ARCHIVELOG ALL COMPLETED BEFORE 'SYSDATE-7';
+
+　　=================================================================
+
+　　RMAN target sys/*****@orcl
+
+　　DELETE NOPROMPT ARCHIVELOG UNTIL TIME "TO_DATE('XXXX-XX-XX','YYYY-MM-DD')";
+
+3.其它相关命令：
+
+　　查看归档日志列表：
+
+　　list archivelog all；
+
+　　查看失效的归档日志列表：
+
+　　list expired archivelog all；
+
+4.定期清除archivelog：
+
+　　可以将如下代码写成.bat文件，在控制面版的任务计划下添加新的定时任务：
+
+　　RMAN target sys/*****@orcl
+
+　　crosscheck archivelog all；
+
+　　delete expired archivelog all；
